@@ -1,0 +1,174 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background: #0b0f19;
+  color: #e5e7eb;
+  line-height: 1.5;
+}
+
+/* IMPORTANT: ne pas casser Tailwind / UI */
+h1, h2, h3, h4, h5 {
+  color: inherit;
+  font-weight: inherit;
+}
+
+/* =========================
+   ROOT THEME VARIABLES
+========================= */
+
+:root {
+  --bg: #0b0f19;
+  --panel: #111827;
+  --border: #1f2937;
+
+  --text: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+#root {
+  min-height: 100vh;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+/* =========================
+   BUTTONS (base)
+========================= */
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input, select, textarea {
+  font-family: inherit;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+}
+
+/* =========================
+   TABLES
+========================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+td, th {
+  padding: 12px;
+}
+
+/* =========================
+   UTILITIES
+========================= */
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-danger {
+  color: var(--danger);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+/* =========================
+   SCROLLBAR (pro clean)
+========================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a3344;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b4660;
+}
