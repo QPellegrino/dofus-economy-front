@@ -11,22 +11,36 @@ type Ingredient = {
 };
 
 interface Props {
-  onClose: () => void;
-  onSuccess: () => void;
-}
+    item?: any;
+    onClose: () => void;
+    onSuccess: () => void;
+  }
 
-export default function AddItemModal({
-  onClose,
-  onSuccess,
-}: Props) {
+  export default function AddItemModal({
+    item,
+    onClose,
+    onSuccess,
+  }: Props){
   const [items, setItems] = useState<Item[]>([]);
 
-  const [name, setName] = useState("");
-  const [type, setType] = useState("ressource");
-  const [price, setPrice] = useState(0);
-  const [petXp, setPetXp] = useState(0);
-
-  const [craftable, setCraftable] = useState(false);
+  const [name, setName] = useState(
+    item?.name ?? ""
+  );
+  
+  const [type, setType] = useState(
+    item?.type ?? "ressource"
+  );
+  
+  const [price, setPrice] = useState(
+    item?.price ?? 0
+  );
+  
+  const [petXp, setPetXp] = useState(
+    item?.petXp ?? 0
+  );
+  
+  const [craftable, setCraftable] =
+    useState(item?.craftable ?? false);
 
   const [ingredients, setIngredients] = useState<
     Ingredient[]
@@ -86,53 +100,73 @@ export default function AddItemModal({
   // 🚀 SUBMIT
   const handleSubmit = async () => {
     try {
-      // 1️⃣ CREATE ITEM
-      const itemRes = await fetch(
-        "http://localhost:3000/items",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            name,
-            type,
-            price,
-            petXp,
-            craftable,
-          }),
-        }
-      );
-
-      const createdItem = await itemRes.json();
-
-      // 2️⃣ CREATE RECIPE
-      if (craftable && ingredients.length > 0) {
+      // ✏️ UPDATE
+      if (item?._id) {
         await fetch(
-          "http://localhost:3000/recipes",
+          `http://localhost:3000/items/${item._id}`,
           {
-            method: "POST",
-
+            method: "PATCH",
+  
             headers: {
               "Content-Type": "application/json",
             },
-
+  
             body: JSON.stringify({
-              resultItemId: createdItem._id,
-
-              ingredients: ingredients.map(
-                (ing) => ({
-                  itemId: ing.itemId,
-                  quantity: ing.quantity,
-                })
-              ),
+              name,
+              type,
+              price,
+              petXp,
+              craftable,
             }),
           }
         );
       }
-
+  
+      // ➕ CREATE
+      else {
+        const itemRes = await fetch(
+          "http://localhost:3000/items",
+          {
+            method: "POST",
+  
+            headers: {
+              "Content-Type": "application/json",
+            },
+  
+            body: JSON.stringify({
+              name,
+              type,
+              price,
+              petXp,
+              craftable,
+            }),
+          }
+        );
+  
+        const createdItem = await itemRes.json();
+  
+        if (
+          craftable &&
+          ingredients.length > 0
+        ) {
+          await fetch(
+            "http://localhost:3000/recipes",
+            {
+              method: "POST",
+  
+              headers: {
+                "Content-Type": "application/json",
+              },
+  
+              body: JSON.stringify({
+                resultItemId: createdItem._id,
+                ingredients,
+              }),
+            }
+          );
+        }
+      }
+  
       onSuccess();
     } catch (error) {
       console.error(error);

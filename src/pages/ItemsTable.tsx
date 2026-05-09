@@ -25,7 +25,10 @@ export default function ItemsTable() {
   >({});
 
   const [openModal, setOpenModal] =
-    useState(false);
+  useState(false);
+
+  const [selectedItem, setSelectedItem] =
+  useState<Item | null>(null);
 
   // 📦 FETCH ITEMS
   const fetchItems = async () => {
@@ -120,11 +123,14 @@ export default function ItemsTable() {
       {/* MODAL */}
       {openModal && (
         <AddItemModal
-          onClose={() =>
-            setOpenModal(false)
-          }
+          item={selectedItem}
+          onClose={() => {
+            setOpenModal(false);
+            setSelectedItem(null);
+          }}
           onSuccess={() => {
             setOpenModal(false);
+            setSelectedItem(null);
             fetchItems();
           }}
         />
@@ -208,7 +214,15 @@ export default function ItemsTable() {
 
                 {/* ACTIONS */}
                 <td>
-
+                  <button
+                    className="edit-btn"
+                    onClick={() => {
+                      setSelectedItem(item);
+                      setOpenModal(true);
+                    }}
+>
+  Modifier
+</button>
                   <button
                     className="delete-btn"
                     onClick={() =>
