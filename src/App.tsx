@@ -1,13 +1,16 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
-import Layout from "./components/Layout";
+import Layout from "./components/layout/Layout";
 
-import ItemsTable from "./pages/ItemsTable";
-import Dashboard from "./pages/Dashboard";
-import SalesHistory from "./pages/SalesHistory";
-import Top20Craft from "./pages/Top20Craft";
-
-const PetXP = () => <div>Top XP Familier</div>;
+import DashboardPage from "./pages/DashboardPage";
+import ItemsPage from "./pages/ItemsPage";
+import TopCraftPage from "./pages/TopCraftPage";
+import PetXPPage from "./pages/PetXPPage";
+import SalesHistoryPage from "./pages/SalesHistoryPage";
 
 export default function App() {
   return (
@@ -17,39 +20,29 @@ export default function App() {
 
         <Route element={<Layout />}>
 
-          {/* ITEMS */}
           <Route
             path="/"
-            element={<ItemsTable />}
+            element={<DashboardPage />}
           />
 
           <Route
             path="/items"
-            element={<ItemsTable />}
+            element={<ItemsPage />}
           />
 
-          {/* TOP CRAFT */}
           <Route
             path="/craft/top-20"
-            element={<Top20Craft />}
+            element={<TopCraftPage />}
           />
 
-          {/* PET XP */}
           <Route
-            path="/pet/top-10-xp"
-            element={<PetXP />}
+            path="/pet/top-xp"
+            element={<PetXPPage />}
           />
 
-          {/* SALES */}
           <Route
             path="/sales"
-            element={<SalesHistory />}
-          />
-
-          {/* DASHBOARD */}
-          <Route
-            path="/dashboard"
-            element={<Dashboard />}
+            element={<SalesHistoryPage />}
           />
 
         </Route>
