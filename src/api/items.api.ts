@@ -1,13 +1,14 @@
 const API = "http://localhost:3000";
 
 function buildAuthHeaders() {
+  const headers: Record<string, string> = {};
   const token = localStorage.getItem("token");
 
-  return token
-    ? {
-        Authorization: `Bearer ${token}`,
-      }
-    : {};
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
 }
 
 export async function getItems() {

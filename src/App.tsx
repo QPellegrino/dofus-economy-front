@@ -13,6 +13,7 @@ import TopCraftPage from "./pages/TopCraftPage";
 import PetXPPage from "./pages/PetXPPage";
 import SalesPage from "./pages/SalesPage";
 import HistoryPage from "./pages/HistoryPage";
+import UsersAdminPage from "./pages/UsersAdminPage";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -74,6 +75,11 @@ export default function App() {
             <Route
               path="/history"
               element={<HistoryPage />}
+            />
+
+            <Route
+              path="/admin/users"
+              element={<UsersAdminPage />}
             />
 
           </Route>

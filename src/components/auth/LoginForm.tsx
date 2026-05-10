@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { login } from "../../api/auth.api";
 
 export default function LoginForm() {
-  const [email, setEmail] =
+  const [username, setUsername] =
     useState("");
 
   const [password, setPassword] =
@@ -25,7 +25,7 @@ export default function LoginForm() {
       setError("");
 
       const data = await login({
-        email,
+        username,
         password,
       });
 
@@ -36,7 +36,7 @@ export default function LoginForm() {
       
       window.location.href = "/items";
     } catch (err) {
-      setError("Email ou mot de passe invalide");
+      setError("Pseudo ou mot de passe invalide");
     } finally {
       setLoading(false);
     }
@@ -56,11 +56,11 @@ export default function LoginForm() {
       )}
 
       <input
-        type="email"
-        placeholder="Email"
-        value={email}
+        type="text"
+        placeholder="Pseudo"
+        value={username}
         onChange={(e) =>
-          setEmail(e.target.value)
+          setUsername(e.target.value)
         }
       />
 

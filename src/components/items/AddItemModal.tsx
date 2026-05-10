@@ -39,11 +39,14 @@ export default function AddItemModal({
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   const authHeaders = () => {
+    const headers: Record<string, string> = {};
     const token = localStorage.getItem("token");
 
-    return token
-      ? { Authorization: `Bearer ${token}` }
-      : {};
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    return headers;
   };
 
   // 📦 LOAD ITEMS

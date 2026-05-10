@@ -1,5 +1,6 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "./Layout.scss";
+import { getUserRole } from "../../utils/auth";
 
 const nav = [
   { path: "/items", label: "📦 Items" },
@@ -12,6 +13,7 @@ const nav = [
 
 export default function Layout() {
   const location = useLocation();
+  const isAdmin = getUserRole() === "admin";
 
   const isActive = (path: string) =>
     location.pathname.startsWith(path);
@@ -34,6 +36,19 @@ export default function Layout() {
               {item.label}
             </Link>
           ))}
+
+          {isAdmin && (
+            <Link
+              to="/admin/users"
+              className={`link ${
+                isActive("/admin/users")
+                  ? "active"
+                  : ""
+              }`}
+            >
+              👤 Utilisateurs
+            </Link>
+          )}
         </nav>
       </aside>
 
