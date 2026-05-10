@@ -45,6 +45,24 @@
   
     font-weight: 700;
   }
+
+  .auth-secondary-button {
+    display: block;
+
+    text-align: center;
+
+    padding: 14px;
+
+    border-radius: $radius-md;
+
+    border: 1px solid $border;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 700;
+  }
   
   .auth-error {
     background: rgba(239, 68, 68, 0.15);

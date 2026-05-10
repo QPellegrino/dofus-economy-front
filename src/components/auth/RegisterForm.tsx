@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { register } from "../../api/auth.api";
 
 export default function RegisterForm() {
@@ -90,6 +91,13 @@ export default function RegisterForm() {
           ? "Création..."
           : "Créer le compte"}
       </button>
+
+      <Link
+        to="/login"
+        className="auth-secondary-button"
+      >
+        Déjà un compte ? Se connecter
+      </Link>
     </form>
   );
 }
