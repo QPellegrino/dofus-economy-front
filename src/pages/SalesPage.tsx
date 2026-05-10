@@ -1,8 +1,8 @@
-export default function SalesHistoryPage() {
+export default function SalesPage() {
   return (
     <div>
       <h1 className="title">
-        Historique des ventes
+        Ventes en cours
       </h1>
     </div>
   );

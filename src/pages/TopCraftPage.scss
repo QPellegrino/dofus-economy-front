@@ -1,0 +1,50 @@
+@import "../styles/variables";
+
+.topcraft-page {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.topcraft-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters-card {
+  display: flex;
+  gap: $space-lg;
+  background: $card;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  padding: $space-lg;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  flex: 1;
+
+  input {
+    padding: 12px;
+    border-radius: $radius-md;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid $border;
+    color: $text;
+  }
+}
+
+.rank-badge {
+  background: $accent-bg;
+  color: $accent;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.ratio-badge {
+  background: rgba(34, 197, 94, 0.15);
+  color: $profit;
+  padding: 4px 10px;
+  border-radius: 999px;
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./AddItemModal.scss"
 
 type Item = {
   _id: string;

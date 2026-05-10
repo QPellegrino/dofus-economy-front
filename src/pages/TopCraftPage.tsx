@@ -1,4 +1,5 @@
 import TopCraftTable from "../components/craft/TopCraftTable";
+import "./TopCraftPage.scss"
 
 export default function TopCraftPage() {
   return (

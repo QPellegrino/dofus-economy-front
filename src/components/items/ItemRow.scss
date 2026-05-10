@@ -1,0 +1,28 @@
+@import "../../styles/_variables";
+
+.delete-btn {
+  background: $loss;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: $radius-sm;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.edit-btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    background: $accent-bg;
+    color: white;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  
+  .edit-btn:hover {
+    opacity: 0.85;
+  }

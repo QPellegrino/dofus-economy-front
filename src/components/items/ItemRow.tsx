@@ -1,5 +1,6 @@
 import { deleteItem } from "../../api/items.api";
 import { Item } from "../../types/item.types";
+import "./ItemRow.scss"
 
 type Props = {
   item: Item;

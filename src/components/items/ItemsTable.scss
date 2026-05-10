@@ -1,0 +1,33 @@
+@import "../../styles/_variables";
+
+.items-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+
+  th {
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    color: $text;
+  }
+
+  td {
+    padding: 14px 12px;
+    background: $card;
+    color: $text;
+  }
+
+  tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  td:first-child {
+    border-radius: $radius-md 0 0 $radius-md;
+  }
+
+  td:last-child {
+    border-radius: 0 $radius-md $radius-md 0;
+  }
+}

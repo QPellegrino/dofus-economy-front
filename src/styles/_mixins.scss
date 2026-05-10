@@ -1,0 +1,19 @@
+@mixin card {
+    background: $card;
+    border: 1px solid $border;
+    border-radius: $radius-md;
+  }
+  
+  @mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @mixin hover {
+    transition: 0.2s;
+    &:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+  }

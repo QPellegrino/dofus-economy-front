@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./ItemsTable.scss"
 
 import { Item } from "../../types/item.types";
 

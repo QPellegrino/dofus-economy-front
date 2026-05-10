@@ -2,6 +2,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 
 import Layout from "./components/layout/Layout";
@@ -10,7 +11,14 @@ import DashboardPage from "./pages/DashboardPage";
 import ItemsPage from "./pages/ItemsPage";
 import TopCraftPage from "./pages/TopCraftPage";
 import PetXPPage from "./pages/PetXPPage";
-import SalesHistoryPage from "./pages/SalesHistoryPage";
+import SalesPage from "./pages/SalesPage";
+import HistoryPage from "./pages/HistoryPage";
+
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import PublicRoute from "./components/auth/PublicRoute";
 
 export default function App() {
   return (
@@ -18,34 +26,70 @@ export default function App() {
 
       <Routes>
 
-        <Route element={<Layout />}>
+        {/* PUBLIC */}
+        <Route element={<PublicRoute />}>
 
           <Route
-            path="/"
-            element={<DashboardPage />}
+            path="/login"
+            element={<LoginPage />}
           />
 
           <Route
-            path="/items"
-            element={<ItemsPage />}
-          />
-
-          <Route
-            path="/craft/top-20"
-            element={<TopCraftPage />}
-          />
-
-          <Route
-            path="/pet/top-xp"
-            element={<PetXPPage />}
-          />
-
-          <Route
-            path="/sales"
-            element={<SalesHistoryPage />}
+            path="/register"
+            element={<RegisterPage />}
           />
 
         </Route>
+
+        {/* PRIVATE */}
+        <Route element={<ProtectedRoute />}>
+
+          <Route element={<Layout />}>
+
+            <Route
+              path="/dashboard"
+              element={<DashboardPage />}
+            />
+
+            <Route
+              path="/items"
+              element={<ItemsPage />}
+            />
+
+            <Route
+              path="/craft/top-20"
+              element={<TopCraftPage />}
+            />
+
+            <Route
+              path="/pet/top-xp"
+              element={<PetXPPage />}
+            />
+
+            <Route
+              path="/sales"
+              element={<SalesPage />}
+            />
+
+            <Route
+              path="/history"
+              element={<HistoryPage />}
+            />
+
+          </Route>
+
+        </Route>
+
+        {/* DEFAULT */}
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to="/items"
+              replace
+            />
+          }
+        />
 
       </Routes>
 
