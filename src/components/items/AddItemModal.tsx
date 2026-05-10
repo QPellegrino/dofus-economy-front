@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./AddItemModal.scss"
+import type { UserRole } from "../../utils/auth";
 
 type Item = {
   _id: string;
@@ -13,15 +14,20 @@ type Ingredient = {
 
 interface Props {
   item?: any;
+  role: UserRole;
   onClose: () => void;
   onSuccess: () => void;
 }
 
 export default function AddItemModal({
   item,
+  role,
   onClose,
   onSuccess,
 }: Props) {
+  const isAdmin = role === "admin";
+  const isEditMode = Boolean(item?._id);
+
   const [items, setItems] = useState<Item[]>([]);
 
   const [name, setName] = useState("");
@@ -31,6 +37,14 @@ export default function AddItemModal({
   const [craftable, setCraftable] = useState(false);
 
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
+  const authHeaders = () => {
+    const token = localStorage.getItem("token");
+
+    return token
+      ? { Authorization: `Bearer ${token}` }
+      : {};
+  };
 
   // 📦 LOAD ITEMS
   useEffect(() => {
@@ -85,33 +99,39 @@ export default function AddItemModal({
   const handleSubmit = async () => {
     try {
       // EDIT
-      if (item?._id) {
+      if (isEditMode) {
+        const payload = isAdmin
+          ? {
+              name,
+              type,
+              price,
+              petXp,
+              craftable,
+            }
+          : { price };
+
         await fetch(
           `http://localhost:3000/items/${item._id}`,
           {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
+              ...authHeaders(),
             },
-            body: JSON.stringify({
-              name,
-              type,
-              price,
-              petXp,
-              craftable,
-            }),
+            body: JSON.stringify(payload),
           }
         );
       }
 
       // CREATE
-      else {
+      else if (isAdmin) {
         const res = await fetch(
           "http://localhost:3000/items",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              ...authHeaders(),
             },
             body: JSON.stringify({
               name,
@@ -130,6 +150,7 @@ export default function AddItemModal({
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              ...authHeaders(),
             },
             body: JSON.stringify({
               resultItemId: created._id,
@@ -150,26 +171,30 @@ export default function AddItemModal({
       <div className="modal">
 
         <div className="modal-top">
-          <h2>{item ? "Modifier item" : "Ajouter item"}</h2>
+          <h2>{isEditMode ? "Modifier item" : "Ajouter item"}</h2>
           <button className="close-btn" onClick={onClose}>✕</button>
         </div>
 
-        {/* NAME */}
-        <div className="field">
-          <label>Nom</label>
-          <input value={name} onChange={(e) => setName(e.target.value)} />
-        </div>
+        {isAdmin && (
+          <>
+            {/* NAME */}
+            <div className="field">
+              <label>Nom</label>
+              <input value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
 
-        {/* TYPE */}
-        <div className="field">
-          <label>Type</label>
-          <select value={type} onChange={(e) => setType(e.target.value)}>
-            <option value="ressource">Ressource</option>
-            <option value="equipement">Équipement</option>
-            <option value="consommable">Consommable</option>
-            <option value="familier">Familier</option>
-          </select>
-        </div>
+            {/* TYPE */}
+            <div className="field">
+              <label>Type</label>
+              <select value={type} onChange={(e) => setType(e.target.value)}>
+                <option value="ressource">Ressource</option>
+                <option value="equipement">Équipement</option>
+                <option value="consommable">Consommable</option>
+                <option value="familier">Familier</option>
+              </select>
+            </div>
+          </>
+        )}
 
         {/* PRICE */}
         <div className="field">
@@ -177,24 +202,28 @@ export default function AddItemModal({
           <input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} />
         </div>
 
-        {/* XP */}
-        <div className="field">
-          <label>XP familier</label>
-          <input type="number" value={petXp} onChange={(e) => setPetXp(Number(e.target.value))} />
-        </div>
+        {isAdmin && (
+          <>
+            {/* XP */}
+            <div className="field">
+              <label>XP familier</label>
+              <input type="number" value={petXp} onChange={(e) => setPetXp(Number(e.target.value))} />
+            </div>
 
-        {/* CRAFT */}
-        <label className="checkbox-row">
-          <input
-            type="checkbox"
-            checked={craftable}
-            onChange={() => setCraftable(!craftable)}
-          />
-          Craftable
-        </label>
+            {/* CRAFT */}
+            <label className="checkbox-row">
+              <input
+                type="checkbox"
+                checked={craftable}
+                onChange={() => setCraftable(!craftable)}
+              />
+              Craftable
+            </label>
+          </>
+        )}
 
         {/* INGREDIENTS */}
-        {craftable && (
+        {isAdmin && craftable && (
           <div className="craft-box">
 
             <h3>Recette</h3>
@@ -228,7 +257,7 @@ export default function AddItemModal({
         <div className="modal-actions">
           <button onClick={onClose}>Annuler</button>
           <button onClick={handleSubmit}>
-            {item ? "Modifier" : "Ajouter"}
+            {isEditMode ? "Modifier" : "Ajouter"}
           </button>
         </div>
 

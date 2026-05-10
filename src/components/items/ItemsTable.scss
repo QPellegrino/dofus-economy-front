@@ -1,5 +1,24 @@
 @import "../../styles/_variables";
 
+.items-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.add-item-btn {
+  background: $accent;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: $radius-sm;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
 .items-table {
   width: 100%;
   border-collapse: separate;

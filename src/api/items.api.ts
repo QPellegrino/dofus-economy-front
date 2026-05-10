@@ -1,5 +1,15 @@
 const API = "http://localhost:3000";
 
+function buildAuthHeaders() {
+  const token = localStorage.getItem("token");
+
+  return token
+    ? {
+        Authorization: `Bearer ${token}`,
+      }
+    : {};
+}
+
 export async function getItems() {
   const res = await fetch(`${API}/items`);
   return res.json();
@@ -10,6 +20,7 @@ export async function createItem(data: any) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...buildAuthHeaders(),
     },
     body: JSON.stringify(data),
   });
@@ -21,14 +32,18 @@ export async function updateItem(id: string, data: any) {
   await fetch(`${API}/items/${id}`, {
     method: "PATCH",
     headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-  }
-  
-  export async function deleteItem(id: string) {
-    await fetch(`${API}/items/${id}`, {
-      method: "DELETE",
-    });
-  }
+      "Content-Type": "application/json",
+      ...buildAuthHeaders(),
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteItem(id: string) {
+  await fetch(`${API}/items/${id}`, {
+    method: "DELETE",
+    headers: {
+      ...buildAuthHeaders(),
+    },
+  });
+}

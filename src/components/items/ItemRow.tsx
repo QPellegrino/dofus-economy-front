@@ -6,12 +6,14 @@ type Props = {
   item: Item;
   refresh: () => void;
   onEdit: () => void;
+  canDelete: boolean;
 };
 
 export default function ItemRow({
   item,
   refresh,
   onEdit,
+  canDelete,
 }: Props) {
   const handleDelete = async () => {
     await deleteItem(item._id);
@@ -46,12 +48,14 @@ export default function ItemRow({
           Modifier
         </button>
 
-        <button
-          className="delete-btn"
-          onClick={handleDelete}
-        >
-          Supprimer
-        </button>
+        {canDelete && (
+          <button
+            className="delete-btn"
+            onClick={handleDelete}
+          >
+            Supprimer
+          </button>
+        )}
 
       </td>
 
